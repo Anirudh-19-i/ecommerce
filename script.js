@@ -52,7 +52,7 @@ const products = [
   {
     id: 5,
     name: "Classic Casual T-Shirt",
-    category: "Electronics",
+    category: "Fashion",
     rating: 4.1,
     price: 599,
     originalPrice: 999,
@@ -201,9 +201,7 @@ function renderProducts(items) {
     card.className = 'product-card';
 
     // Set Add to Cart button attribute
-    const cartButtonAttr = product.id === 11 
-      ? 'data-product-id="stand-11"' 
-      : `data-product-id="${product.id}"`;
+    const cartButtonAttr = `data-product-id="${product.id}"`;
 
     card.innerHTML = `
       <div class="product-image-container">
@@ -344,7 +342,7 @@ function setupEventListeners() {
 
 // Search Handler
 function handleSearch() {
-  const query = searchInput.value;
+  const query = searchInput.value.trim().toLowerCase();
 
   if (query === "") {
     productsGrid.innerHTML = '<p class="error-msg">Please enter a search keyword</p>';
@@ -352,44 +350,47 @@ function handleSearch() {
     return;
   }
 
-  // Filter products matching search term
+  // Filter products matching search term (case-insensitive, partial match)
   const searchResults = products.filter(product => {
-    return product.name.includes(query) || product.name.split(' ').includes(query);
+    return product.name.toLowerCase().includes(query);
   });
 
   renderProducts(searchResults);
 }
 
-// Category Filter Handler
-function handleCategoryFilter() {
-  const selected = categoryFilter.value;
+// Combined Filter Handler — applies category + price filters together
+function applyFilters() {
+  const selectedCategory = categoryFilter.value;
+  const selectedPrice = priceFilter.value;
 
-  if (selected === 'all') {
-    currentProducts = [...products];
-  } else if (selected === 'Home & Living') {
-    currentProducts = products.filter(p => p.category === 'Home');
-  } else {
-    currentProducts = products.filter(p => p.category === selected);
+  let filtered = [...products];
+
+  // Category filter
+  if (selectedCategory !== 'all') {
+    filtered = filtered.filter(p => p.category === selectedCategory);
   }
 
+  // Price filter
+  if (selectedPrice === 'under-1000') {
+    filtered = filtered.filter(p => p.price < 1000);
+  } else if (selectedPrice === '1000-3000') {
+    filtered = filtered.filter(p => p.price >= 1000 && p.price <= 3000);
+  } else if (selectedPrice === 'above-3000') {
+    filtered = filtered.filter(p => p.price > 3000);
+  }
+
+  currentProducts = filtered;
   renderProducts(currentProducts);
+}
+
+// Category Filter Handler
+function handleCategoryFilter() {
+  applyFilters();
 }
 
 // Price Filter Handler
 function handlePriceFilter() {
-  const selectedPrice = priceFilter.value;
-
-  if (selectedPrice === 'all') {
-    currentProducts = [...products];
-  } else if (selectedPrice === 'under-1000') {
-    currentProducts = products.filter(p => p.price < 1000);
-  } else if (selectedPrice === '1000-3000') {
-    currentProducts = products.filter(p => p.price >= 1000 && p.price <= 3000);
-  } else if (selectedPrice === 'above-3000') {
-    currentProducts = products.filter(p => p.price < 3000);
-  }
-
-  renderProducts(currentProducts);
+  applyFilters();
 }
 
 // Sort Handler
@@ -400,7 +401,7 @@ function handleSort() {
   if (sortType === 'price-low') {
     sorted.sort((a, b) => a.price - b.price);
   } else if (sortType === 'price-high') {
-    sorted.sort((a, b) => a.price - b.price);
+    sorted.sort((a, b) => b.price - a.price);
   } else if (sortType === 'name-az') {
     sorted.sort((a, b) => a.name.localeCompare(b.name));
   } else {
@@ -423,7 +424,7 @@ function resetAllFilters() {
 // Open Product Modal
 function openProductModal(productId) {
   // Retrieve product details
-  const product = products[productId];
+  const product = products.find(p => p.id === productId);
 
   if (!product) return;
 
@@ -523,9 +524,10 @@ function removeFromCart(productId) {
 
 // Calculate and Update Cart UI
 function updateCartUI() {
-  // Update cart badge and header count
-  cartCount.textContent = cart.length;
-  cartHeaderCount.textContent = cart.length;
+  // Update cart badge and header count (total quantity, not unique items)
+  const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = totalQty;
+  cartHeaderCount.textContent = totalQty;
 
   // Render items list
   cartItemsList.innerHTML = '';
