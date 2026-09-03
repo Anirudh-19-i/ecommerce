@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - Everything You Need, All in One Place</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header & Navigation Bar -->
+    <header class="header">
+        <div class="container navbar">
+            <div class="logo-area">
+                <a href="#home" class="logo">
+                    <span class="logo-icon">🛍️</span>
+                    <span class="logo-text">ShopEase</span>
+                </a>
+                <p class="tagline">Everything You Need, All in One Place</p>
+            </div>
+
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#products" class="nav-link">Products</a></li>
+                    <li><a href="#categories" class="nav-link">Categories</a></li>
+                    <li><a href="#categories" class="nav-link">Deals</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search products..." autocomplete="off">
+                    <button id="searchBtn" type="button" aria-label="Search">🔍</button>
+                </div>
+
+                <button id="cartBtn" class="cart-button" aria-label="Shopping Cart">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-label">Cart</span>
+                    <span id="cartCount" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="hero-badge">Mega Summer Sale 2026</span>
+                <h1 class="hero-title">Shop Smart. Live Better.</h1>
+                <p class="hero-description">
+                    Discover everyday essentials, trending products and great deals at ShopEase.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#deals" class="btn btn-primary" id="heroShopNow">Shop Now</a>
+                    <a href="#deals" class="btn btn-outline">Explore Deals</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=80"
+                    alt="Shopping Deals at ShopEase" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop by Category Section -->
+    <section id="categories" class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Shop by Category</h2>
+                <p class="section-subtitle">Explore our diverse catalog of carefully curated collections</p>
+            </div>
+
+            <div class="category-grid">
+                <div class="category-card" data-category="Electronics">
+                    <div class="category-icon">⚡</div>
+                    <h3>Electronics</h3>
+                    <p>Gadgets & Smart Devices</p>
+                    <button class="category-btn" data-category="Electronics">Explore</button>
+                </div>
+
+                <div class="category-card" data-category="Fashion">
+                    <div class="category-icon">👕</div>
+                    <h3>Fashion</h3>
+                    <p>Modern Apparel & Wear</p>
+                    <button class="category-btn" data-category="Fashion">Explore</button>
+                </div>
+
+                <div class="category-card" data-category="Home & Living">
+                    <div class="category-icon">🏠</div>
+                    <h3>Home & Living</h3>
+                    <p>Decor & Home Essentials</p>
+                    <button class="category-btn" data-category="Home & Living">Explore</button>
+                </div>
+
+                <div class="category-card" data-category="Beauty">
+                    <div class="category-icon">✨</div>
+                    <h3>Beauty</h3>
+                    <p>Skincare & Personal Care</p>
+                    <button class="category-btn" data-category="Fashion">Explore</button>
+                </div>
+
+                <div class="category-card" data-category="Sports">
+                    <div class="category-icon">⚽</div>
+                    <h3>Sports</h3>
+                    <p>Gear & Fitness Equipment</p>
+                    <button class="category-btn" data-category="Sports">Explore</button>
+                </div>
+
+                <div class="category-card" data-category="Accessories">
+                    <div class="category-icon">🎒</div>
+                    <h3>Accessories</h3>
+                    <p>Everyday Bags & Extras</p>
+                    <button class="category-btn" data-category="Accessories">Explore</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Today's Deals Section -->
+    <section id="deals" class="deals-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="deal-tag">Limited Time Offers</span>
+                <h2 class="section-title">Today's Deals</h2>
+                <p class="section-subtitle">Grab these exclusive discounts before stocks run out!</p>
+            </div>
+
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-badge">29% OFF</div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80"
+                        alt="Wireless Headphones" class="deal-image">
+                    <div class="deal-info">
+                        <span class="deal-category">Electronics</span>
+                        <h3 class="deal-name">Wireless Bluetooth Headphones</h3>
+                        <div class="deal-pricing">
+                            <span class="deal-price">₹2,499</span>
+                            <span class="deal-original-price">₹3,499</span>
+                        </div>
+                        <button class="btn btn-deal grab-deal-btn" data-product-id="1">Grab Deal</button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-badge">75% OFF</div>
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"
+                        alt="Smart Watch" class="deal-image">
+                    <div class="deal-info">
+                        <span class="deal-category">Electronics</span>
+                        <h3 class="deal-name">Smart Fitness Watch</h3>
+                        <div class="deal-pricing">
+                            <span class="deal-price">₹3,999</span>
+                            <span class="deal-original-price">₹5,999</span>
+                        </div>
+                        <button class="btn btn-deal grab-deal-btn" data-product-id="2">Grab Deal</button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-badge">30% OFF</div>
+                    <img src="https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=500&q=80"
+                        alt="Coffee Maker" class="deal-image">
+                    <div class="deal-info">
+                        <span class="deal-category">Home & Living</span>
+                        <h3 class="deal-name">Automatic Coffee Maker</h3>
+                        <div class="deal-pricing">
+                            <span class="deal-price">₹3,499</span>
+                            <span class="deal-original-price">₹4,999</span>
+                        </div>
+                        <button class="btn btn-deal grab-deal-btn" data-product-id="6">Grab Deal</button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-badge">37% OFF</div>
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80"
+                        alt="Running Shoes" class="deal-image">
+                    <div class="deal-info">
+                        <span class="deal-category">Sports</span>
+                        <h3 class="deal-name">Lightweight Running Shoes</h3>
+                        <div class="deal-pricing">
+                            <span class="deal-price">₹1,899</span>
+                            <span class="deal-original-price">₹2,999</span>
+                        </div>
+                        <button class="btn btn-deal grab-deal-btn" data-product-id="3">Grab Deal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Products</h2>
+                <p class="section-subtitle">Discover top-rated quality products chosen for your lifestyle</p>
+            </div>
+
+            <!-- Filter and Sort Controls -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="categoryFilter">Category:</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Home & Living">Home & Living</option>
+                        <option value="Beauty">Beauty</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Accessories">Accessories</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="priceFilter">Price:</label>
+                    <select id="priceFilter">
+                        <option value="all">All Prices</option>
+                        <option value="under-1000">Under ₹1000</option>
+                        <option value="1000-3000">₹1000 – ₹3000</option>
+                        <option value="above-3000">Above ₹3000</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sortFilter">Sort By:</label>
+                    <select id="sortFilter">
+                        <option value="default">Default</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name-az">Name: A–Z</option>
+                    </select>
+                </div>
+
+                <button id="resetFiltersBtn" class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+
+            <!-- Active Filter Status Indicator -->
+            <div id="filterStatus" class="filter-status">
+                <span id="resultsCount">Showing all products</span>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be dynamically rendered here by script.js -->
+            </div>
+
+            <!-- Empty State Message -->
+            <div id="noProductsMsg" class="no-products" style="display: none;">
+                <div class="no-products-icon">🔍</div>
+                <h3>No Products Found</h3>
+                <p>Try adjusting your search query or filters.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-box">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">Stay Updated</h2>
+                    <p class="newsletter-description">
+                        Subscribe to receive updates about new products and special offers.
+                    </p>
+                </div>
+                <form id="newsletterForm" class="newsletter-form">
+                    <div class="input-group">
+                        <input type="text" id="newsletterEmail" placeholder="Enter your email address...">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                    <p id="newsletterMessage" class="newsletter-message"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick & dependable doorstep delivery across all major regions.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🛡️</div>
+                    <h3>Quality Guarantee</h3>
+                    <p>Carefully verified authentic items directly from verified sellers.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🔄</div>
+                    <h3>Easy Returns</h3>
+                    <p>Hassle-free 7-day replacement and return policy on eligible orders.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🎧</div>
+                    <h3>24/7 Support</h3>
+                    <p>Friendly customer service ready to assist you anytime you need help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <div class="logo-area">
+                    <a href="#home" class="logo">
+                        <span class="logo-icon">🛍️</span>
+                        <span class="logo-text">ShopEase</span>
+                    </a>
+                    <p class="tagline">"Everything You Need, All in One Place"</p>
+                </div>
+                <p class="footer-about">
+                    Your one-stop destination for quality lifestyle, fashion, electronics, and daily essentials.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#deals">Deals</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Customer Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#about">Help Center</a></li>
+                    <li><a href="#about">Shipping</a></li>
+                    <li><a href="#about">Returns</a></li>
+                    <li><a href="#about">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="#products">Electronics</a></li>
+                    <li><a href="#products">Fashion</a></li>
+                    <li><a href="#products">Home & Living</a></li>
+                    <li><a href="#products">Sports</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-content">
+                <p>Made for Code & Debug Challenge</p>
+                <p>&copy; 2026 ShopEase. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+            <div class="modal-body" id="modalBody">
+                <!-- Injected by script.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Shopping Cart (<span id="cartHeaderCount">0</span>)</h3>
+            <button id="closeCartBtn" class="close-cart-btn" aria-label="Close cart">&times;</button>
+        </div>
+
+        <div id="cartItemsList" class="cart-items-list">
+            <!-- Injected by script.js -->
+            <div class="empty-cart-msg">Your cart is empty.</div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-summary-row">
+                <span>Items:</span>
+                <span id="cartItemsTotal">0</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal">₹0</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Shipping:</span>
+                <span class="free-shipping">FREE</span>
+            </div>
+            <div class="cart-summary-row total-row">
+                <span>Total Amount:</span>
+                <span id="cartGrandTotal">₹0</span>
+            </div>
+            <div class="cart-actions">
+                <button id="clearCartBtn" class="btn btn-outline btn-block">Clear Cart</button>
+                <button id="checkoutBtn" class="btn btn-primary btn-block">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+    <div id="cartBackdrop" class="cart-backdrop"></div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast">Item added to cart!</div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
