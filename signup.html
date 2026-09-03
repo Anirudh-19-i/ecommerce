@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEase - Create Account</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+
+  <div class="auth-container">
+    <div class="auth-left">
+      <div class="auth-brand">
+        <a href="index1.html" class="logo">
+          <span class="logo-icon">🛍️</span>
+          <span class="logo-text">ShopEase</span>
+        </a>
+        <p class="auth-tagline">Everything You Need, All in One Place</p>
+      </div>
+      <div class="auth-hero-text">
+        <h1>Join ShopEase Today</h1>
+        <p>Create your account and unlock exclusive deals, wishlists, and a personalized shopping experience.</p>
+      </div>
+      <div class="auth-features">
+        <div class="auth-feature"><span>🎁</span> Get 15% off your first order</div>
+        <div class="auth-feature"><span>⭐</span> Earn reward points on purchases</div>
+        <div class="auth-feature"><span>🔔</span> Early access to flash sales</div>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-form-wrapper">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Fill in your details to get started</p>
+
+        <form id="signupForm" class="auth-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signupFirstName">First Name</label>
+              <input type="text" id="signupFirstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="signupLastName">Last Name</label>
+              <input type="text" id="signupLastName" placeholder="Doe" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="signupEmail" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPhone">Phone Number</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">📱</span>
+              <input type="tel" id="signupPhone" placeholder="+91 98765 43210">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="signupPassword" placeholder="Min 6 characters" required minlength="6">
+              <button type="button" class="toggle-password" id="toggleSignupPwd" aria-label="Toggle password">👁️</button>
+            </div>
+            <div class="password-strength" id="passwordStrength"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="signupConfirmPassword">Confirm Password</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="signupConfirmPassword" placeholder="Re-enter password" required>
+            </div>
+          </div>
+
+          <label class="checkbox-label terms-check">
+            <input type="checkbox" id="agreeTerms" required>
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </label>
+
+          <button type="submit" class="btn btn-primary btn-block btn-auth">Create Account</button>
+
+          <p id="signupMessage" class="auth-message"></p>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="login.html">Sign In</a></p>
+        <p class="auth-switch" style="margin-top:8px"><a href="index1.html" style="color:#888">Continue as Guest →</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle password visibility
+    document.getElementById('toggleSignupPwd').addEventListener('click', function() {
+      const pwd = document.getElementById('signupPassword');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+      this.textContent = pwd.type === 'password' ? '👁️' : '🙈';
+    });
+
+    // Password strength indicator
+    document.getElementById('signupPassword').addEventListener('input', function() {
+      const strength = document.getElementById('passwordStrength');
+      const val = this.value;
+      let level = 0;
+      if (val.length >= 6) level++;
+      if (val.length >= 10) level++;
+      if (/[A-Z]/.test(val)) level++;
+      if (/[0-9]/.test(val)) level++;
+      if (/[^A-Za-z0-9]/.test(val)) level++;
+
+      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong', 'Excellent'];
+      const colors = ['', '#ef4444', '#f59e0b', '#eab308', '#22c55e', '#10b981'];
+      if (val.length === 0) {
+        strength.innerHTML = '';
+      } else {
+        strength.innerHTML = '<div class="strength-bar"><div class="strength-fill" style="width:' + (level * 20) + '%;background:' + colors[level] + '"></div></div><span style="color:' + colors[level] + '">' + labels[level] + '</span>';
+      }
+    });
+
+    // Signup form handler
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const firstName = document.getElementById('signupFirstName').value.trim();
+      const lastName = document.getElementById('signupLastName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+      const agreeTerms = document.getElementById('agreeTerms').checked;
+      const msg = document.getElementById('signupMessage');
+
+      if (!firstName || !lastName || !email || !password || !confirmPassword) {
+        msg.textContent = 'Please fill in all required fields.';
+        msg.className = 'auth-message error';
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        msg.textContent = 'Passwords do not match.';
+        msg.className = 'auth-message error';
+        return;
+      }
+
+      if (password.length < 6) {
+        msg.textContent = 'Password must be at least 6 characters.';
+        msg.className = 'auth-message error';
+        return;
+      }
+
+      if (!agreeTerms) {
+        msg.textContent = 'Please agree to the Terms of Service.';
+        msg.className = 'auth-message error';
+        return;
+      }
+
+      // Store user in localStorage
+      const users = JSON.parse(localStorage.getItem('shopease_users') || '[]');
+      if (users.find(u => u.email === email)) {
+        msg.textContent = 'An account with this email already exists.';
+        msg.className = 'auth-message error';
+        return;
+      }
+
+      const newUser = { firstName, lastName, email, phone, password };
+      users.push(newUser);
+      localStorage.setItem('shopease_users', JSON.stringify(users));
+      localStorage.setItem('shopease_current_user', JSON.stringify(newUser));
+
+      msg.textContent = 'Account created successfully! Redirecting...';
+      msg.className = 'auth-message success';
+      setTimeout(() => { window.location.href = 'index1.html'; }, 1000);
+    });
+  </script>
+</body>
+</html>

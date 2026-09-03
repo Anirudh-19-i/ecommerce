@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEase - My Account</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .account-layout{display:flex;gap:30px;padding:40px 0;min-height:80vh}
+    .account-sidebar{width:260px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:24px;height:fit-content;position:sticky;top:100px}
+    .account-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#c8a44e,#a07830);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 12px;color:#000}
+    .account-name{text-align:center;color:#fff;font-size:1.1rem;font-weight:600}
+    .account-email{text-align:center;color:#888;font-size:0.8rem;margin-bottom:20px}
+    .sidebar-nav{display:flex;flex-direction:column;gap:4px}
+    .sidebar-nav button{background:none;border:none;color:#aaa;padding:10px 14px;border-radius:8px;text-align:left;cursor:pointer;font-size:0.9rem;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:10px}
+    .sidebar-nav button:hover{background:#222;color:#fff}
+    .sidebar-nav button.active{background:rgba(200,164,78,0.15);color:#c8a44e;font-weight:600}
+    .sidebar-nav .logout-btn{color:#ef4444;margin-top:10px;border-top:1px solid #2a2a2a;padding-top:14px}
+    .sidebar-nav .logout-btn:hover{background:rgba(239,68,68,0.1)}
+    .account-content{flex:1}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .panel-title{color:#fff;font-size:1.4rem;margin-bottom:4px}
+    .panel-desc{color:#888;font-size:0.9rem;margin-bottom:24px}
+    .profile-form .form-group{margin-bottom:16px}
+    .profile-form label{display:block;color:#bbb;font-size:0.85rem;margin-bottom:6px;font-weight:500}
+    .profile-form input,.profile-form select,.profile-form textarea{width:100%;padding:11px 14px;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#eee;font-size:0.9rem;font-family:inherit;outline:none}
+    .profile-form input:focus,.profile-form select:focus{border-color:#c8a44e}
+    .profile-form .form-row{display:flex;gap:12px}
+    .profile-form .form-row .form-group{flex:1}
+    .save-msg{font-size:0.85rem;margin-top:8px}
+    .save-msg.success{color:#10b981}
+    .order-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:20px;margin-bottom:16px}
+    .order-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+    .order-id{color:#c8a44e;font-weight:600;font-size:0.95rem}
+    .order-date{color:#888;font-size:0.8rem}
+    .order-status{padding:4px 12px;border-radius:12px;font-size:0.75rem;font-weight:600}
+    .status-delivered{background:rgba(16,185,129,0.15);color:#10b981}
+    .status-shipped{background:rgba(59,130,246,0.15);color:#3b82f6}
+    .status-processing{background:rgba(245,158,11,0.15);color:#f59e0b}
+    .status-confirmed{background:rgba(200,164,78,0.15);color:#c8a44e}
+    .order-items{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+    .order-item{display:flex;align-items:center;gap:12px;padding:10px;background:#111;border-radius:8px}
+    .order-item img{width:50px;height:50px;object-fit:cover;border-radius:6px}
+    .order-item-info{flex:1;color:#bbb;font-size:0.85rem}
+    .order-item-info strong{color:#eee;display:block;margin-bottom:2px}
+    .order-item-price{color:#c8a44e;font-weight:600}
+    .order-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid #2a2a2a}
+    .order-total{color:#fff;font-weight:700;font-size:1.05rem}
+    .tracking-bar{margin-top:14px;padding:16px;background:#111;border-radius:8px}
+    .tracking-steps{display:flex;justify-content:space-between;position:relative;margin-top:8px}
+    .tracking-steps::before{content:'';position:absolute;top:14px;left:20px;right:20px;height:3px;background:#2a2a2a}
+    .tracking-step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+    .tracking-dot{width:28px;height:28px;border-radius:50%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#666}
+    .tracking-dot.done{background:#10b981;color:#fff}
+    .tracking-dot.current{background:#c8a44e;color:#000;box-shadow:0 0 10px rgba(200,164,78,0.4)}
+    .tracking-label{font-size:0.7rem;color:#888;text-align:center}
+    .tracking-date{font-size:0.65rem;color:#666}
+    .wishlist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .wishlist-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;overflow:hidden;transition:all 0.2s}
+    .wishlist-card:hover{border-color:#c8a44e}
+    .wishlist-card img{width:100%;height:160px;object-fit:cover}
+    .wishlist-card-info{padding:14px}
+    .wishlist-card-info h4{color:#eee;font-size:0.9rem;margin-bottom:6px}
+    .wishlist-card-info .price{color:#c8a44e;font-weight:600;margin-bottom:10px;font-size:0.95rem}
+    .wishlist-actions{display:flex;gap:8px}
+    .wishlist-actions button{flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;font-size:0.8rem;font-family:inherit;font-weight:500;transition:all 0.2s}
+    .wishlist-add-cart{background:linear-gradient(135deg,#c8a44e,#a07830);color:#000}
+    .wishlist-remove{background:#2a2a2a;color:#ef4444}
+    .empty-state{text-align:center;padding:60px 20px;color:#888}
+    .empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
+    .empty-state h3{color:#ddd;margin-bottom:8px}
+    .empty-state a{color:#c8a44e}
+    .support-section{margin-top:30px}
+    .support-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .support-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:20px;transition:all 0.2s}
+    .support-card:hover{border-color:#c8a44e}
+    .support-card h4{color:#eee;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+    .support-card p{color:#888;font-size:0.85rem;margin-bottom:8px}
+    .support-card a{color:#c8a44e;font-size:0.85rem}
+    @media(max-width:768px){.account-layout{flex-direction:column}.account-sidebar{width:100%;position:static}.wishlist-grid{grid-template-columns:repeat(2,1fr)}.support-cards{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar">
+      <div class="logo-area">
+        <a href="index1.html" class="logo"><span class="logo-icon">🛍️</span><span class="logo-text">ShopEase</span></a>
+      </div>
+      <nav class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index1.html" class="nav-link">Home</a></li>
+          <li><a href="index1.html#products" class="nav-link">Products</a></li>
+          <li><a href="index1.html#categories" class="nav-link">Categories</a></li>
+          <li><a href="index1.html#deals" class="nav-link">Deals</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="index1.html" class="btn btn-outline btn-sm">← Back to Shop</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout-main">
+    <div class="container account-layout">
+      <aside class="account-sidebar">
+        <div class="account-avatar" id="avatarInitial">?</div>
+        <div class="account-name" id="sidebarName">Guest</div>
+        <div class="account-email" id="sidebarEmail">Not signed in</div>
+        <nav class="sidebar-nav">
+          <button class="active" data-tab="profile">👤 My Profile</button>
+          <button data-tab="orders">📦 My Orders</button>
+          <button data-tab="wishlist">❤️ Wishlist</button>
+          <button data-tab="support">🎧 Customer Support</button>
+          <button class="logout-btn" id="logoutBtn">🚪 Logout</button>
+        </nav>
+      </aside>
+
+      <div class="account-content">
+        <!-- Profile Tab -->
+        <div class="tab-panel active" id="tab-profile">
+          <h2 class="panel-title">My Profile</h2>
+          <p class="panel-desc">Manage your personal information</p>
+          <form class="profile-form" id="profileForm">
+            <div class="form-row">
+              <div class="form-group"><label for="profFirst">First Name</label><input type="text" id="profFirst"></div>
+              <div class="form-group"><label for="profLast">Last Name</label><input type="text" id="profLast"></div>
+            </div>
+            <div class="form-group"><label for="profEmail">Email</label><input type="email" id="profEmail"></div>
+            <div class="form-group"><label for="profPhone">Phone</label><input type="tel" id="profPhone"></div>
+            <div class="form-row">
+              <div class="form-group"><label for="profDob">Date of Birth</label><input type="date" id="profDob"></div>
+              <div class="form-group"><label for="profGender">Gender</label>
+                <select id="profGender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select>
+              </div>
+            </div>
+            <div class="form-group"><label for="profAddress">Address</label><input type="text" id="profAddress" placeholder="Street address"></div>
+            <div class="form-row">
+              <div class="form-group"><label for="profCity">City</label><input type="text" id="profCity"></div>
+              <div class="form-group"><label for="profState">State</label><input type="text" id="profState"></div>
+              <div class="form-group"><label for="profPin">PIN Code</label><input type="text" id="profPin" maxlength="6"></div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px">
+              <button type="submit" class="btn btn-primary btn-auth">Save Changes</button>
+              <button type="button" class="btn btn-outline btn-sm" id="changePwdBtn">Change Password</button>
+            </div>
+            <p id="profileMsg" class="save-msg"></p>
+          </form>
+          <div id="pwdSection" style="display:none;margin-top:20px;padding:20px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px">
+            <h3 style="color:#ddd;margin-bottom:12px">Change Password</h3>
+            <form id="pwdForm" class="profile-form">
+              <div class="form-group"><label for="currentPwd">Current Password</label><input type="password" id="currentPwd"></div>
+              <div class="form-group"><label for="newPwd">New Password</label><input type="password" id="newPwd" minlength="6"></div>
+              <div class="form-group"><label for="confirmNewPwd">Confirm New Password</label><input type="password" id="confirmNewPwd"></div>
+              <button type="submit" class="btn btn-primary btn-sm">Update Password</button>
+              <p id="pwdMsg" class="save-msg"></p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div class="tab-panel" id="tab-orders">
+          <h2 class="panel-title">My Orders</h2>
+          <p class="panel-desc">Track and manage your orders</p>
+          <div id="ordersContainer"></div>
+        </div>
+
+        <!-- Wishlist Tab -->
+        <div class="tab-panel" id="tab-wishlist">
+          <h2 class="panel-title">My Wishlist</h2>
+          <p class="panel-desc">Items you've saved for later</p>
+          <div id="wishlistContainer" class="wishlist-grid"></div>
+        </div>
+
+        <!-- Support Tab -->
+        <div class="tab-panel" id="tab-support">
+          <h2 class="panel-title">Customer Support</h2>
+          <p class="panel-desc">We're here to help you</p>
+          <div class="support-cards">
+            <div class="support-card"><h4>📞 Call Us</h4><p>Mon–Sat, 9 AM – 8 PM IST</p><a href="tel:+911800123456">+91 1800-123-456 (Toll Free)</a></div>
+            <div class="support-card"><h4>✉️ Email Support</h4><p>We typically respond within 24 hours</p><a href="mailto:support@shopease.in">support@shopease.in</a></div>
+            <div class="support-card"><h4>💬 Live Chat</h4><p>Instant help from our support team</p><a href="#" onclick="alert('Live chat coming soon!')">Start Chat →</a></div>
+            <div class="support-card"><h4>📋 FAQs</h4><p>Quick answers to common questions</p><a href="#" onclick="alert('FAQ page coming soon!')">Browse FAQs →</a></div>
+          </div>
+          <div class="support-section">
+            <h3 style="color:#ddd;margin-bottom:14px">Policies</h3>
+            <div class="support-cards">
+              <div class="support-card"><h4>🚚 Shipping Policy</h4><p>Free standard delivery on orders above ₹999. Express (₹149) in 2-3 days. Overnight (₹299) next business day. All orders are trackable.</p></div>
+              <div class="support-card"><h4>🔄 Returns & Refunds</h4><p>Easy 7-day return policy on eligible items. Refunds processed within 5-7 business days after item received. No questions asked.</p></div>
+              <div class="support-card"><h4>🛡️ Warranty</h4><p>All electronics carry a minimum 1-year manufacturer warranty. Extended warranty available at checkout.</p></div>
+              <div class="support-card"><h4>🔒 Privacy & Security</h4><p>Your data is encrypted and never shared. We use industry-standard SSL encryption for all transactions.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('shopease_current_user') || 'null');
+    if (!user) { window.location.href = 'login.html'; }
+
+    // Sidebar info
+    function loadSidebar() {
+      const u = JSON.parse(localStorage.getItem('shopease_current_user') || 'null');
+      if (!u) return;
+      document.getElementById('avatarInitial').textContent = (u.firstName||'?')[0].toUpperCase();
+      document.getElementById('sidebarName').textContent = (u.firstName||'')+' '+(u.lastName||'');
+      document.getElementById('sidebarEmail').textContent = u.email||'';
+    }
+
+    // Tabs
+    document.querySelectorAll('.sidebar-nav button[data-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('shopease_current_user');
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Profile form
+    function loadProfile() {
+      const u = JSON.parse(localStorage.getItem('shopease_current_user') || '{}');
+      document.getElementById('profFirst').value = u.firstName || '';
+      document.getElementById('profLast').value = u.lastName || '';
+      document.getElementById('profEmail').value = u.email || '';
+      document.getElementById('profPhone').value = u.phone || '';
+      document.getElementById('profDob').value = u.dob || '';
+      document.getElementById('profGender').value = u.gender || '';
+      document.getElementById('profAddress').value = u.address || '';
+      document.getElementById('profCity').value = u.city || '';
+      document.getElementById('profState').value = u.state || '';
+      document.getElementById('profPin').value = u.pin || '';
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const u = JSON.parse(localStorage.getItem('shopease_current_user') || '{}');
+      u.firstName = document.getElementById('profFirst').value.trim();
+      u.lastName = document.getElementById('profLast').value.trim();
+      u.email = document.getElementById('profEmail').value.trim();
+      u.phone = document.getElementById('profPhone').value.trim();
+      u.dob = document.getElementById('profDob').value;
+      u.gender = document.getElementById('profGender').value;
+      u.address = document.getElementById('profAddress').value.trim();
+      u.city = document.getElementById('profCity').value.trim();
+      u.state = document.getElementById('profState').value.trim();
+      u.pin = document.getElementById('profPin').value.trim();
+      localStorage.setItem('shopease_current_user', JSON.stringify(u));
+      // Also update in users array
+      const users = JSON.parse(localStorage.getItem('shopease_users') || '[]');
+      const idx = users.findIndex(x => x.email === u.email);
+      if (idx >= 0) users[idx] = u; else users.push(u);
+      localStorage.setItem('shopease_users', JSON.stringify(users));
+      const msg = document.getElementById('profileMsg');
+      msg.textContent = '✅ Profile updated successfully!';
+      msg.className = 'save-msg success';
+      loadSidebar();
+      setTimeout(() => msg.textContent = '', 3000);
+    });
+
+    document.getElementById('changePwdBtn').addEventListener('click', () => {
+      const s = document.getElementById('pwdSection');
+      s.style.display = s.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('pwdForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const msg = document.getElementById('pwdMsg');
+      const u = JSON.parse(localStorage.getItem('shopease_current_user') || '{}');
+      const cur = document.getElementById('currentPwd').value;
+      const np = document.getElementById('newPwd').value;
+      const cp = document.getElementById('confirmNewPwd').value;
+      if (cur !== u.password) { msg.textContent = '❌ Current password is incorrect'; msg.className = 'save-msg error'; return; }
+      if (np.length < 6) { msg.textContent = '❌ New password must be 6+ characters'; msg.className = 'save-msg error'; return; }
+      if (np !== cp) { msg.textContent = '❌ Passwords do not match'; msg.className = 'save-msg error'; return; }
+      u.password = np;
+      localStorage.setItem('shopease_current_user', JSON.stringify(u));
+      const users = JSON.parse(localStorage.getItem('shopease_users') || '[]');
+      const idx = users.findIndex(x => x.email === u.email);
+      if (idx >= 0) { users[idx] = u; localStorage.setItem('shopease_users', JSON.stringify(users)); }
+      msg.textContent = '✅ Password changed successfully!'; msg.className = 'save-msg success';
+      document.getElementById('pwdForm').reset();
+    });
+
+    // Orders
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('shopease_orders') || '[]');
+      const container = document.getElementById('ordersContainer');
+      if (orders.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><h3>No orders yet</h3><p>Start shopping and your orders will appear here.</p><p><a href="index1.html">Browse Products →</a></p></div>';
+        return;
+      }
+      container.innerHTML = '';
+      orders.reverse().forEach(order => {
+        const statusClass = {'Delivered':'status-delivered','Shipped':'status-shipped','Processing':'status-processing','Confirmed':'status-confirmed'}[order.status] || 'status-confirmed';
+        const itemsHtml = order.items.map(i => `<div class="order-item"><img src="${i.image}" alt="${i.name}"><div class="order-item-info"><strong>${i.name}</strong>Qty: ${i.quantity}</div><span class="order-item-price">₹${(i.price*i.quantity).toLocaleString()}</span></div>`).join('');
+        const trackingHtml = generateTracking(order);
+        container.innerHTML += `<div class="order-card">
+          <div class="order-header">
+            <span class="order-id">Order ${order.id}</span>
+            <span class="order-date">Placed on ${order.date}</span>
+            <span class="order-status ${statusClass}">${order.status}</span>
+          </div>
+          <div class="order-items">${itemsHtml}</div>
+          ${trackingHtml}
+          <div class="order-footer">
+            <span style="color:#888;font-size:0.85rem">${order.items.reduce((s,i)=>s+i.quantity,0)} item(s) · ${order.paymentMethod||'Card'}</span>
+            <span class="order-total">Total: ₹${order.total.toLocaleString()}</span>
+          </div>
+        </div>`;
+      });
+    }
+
+    function generateTracking(order) {
+      const steps = ['Confirmed','Processing','Shipped','Out for Delivery','Delivered'];
+      const statusIdx = {'Confirmed':0,'Processing':1,'Shipped':2,'Out for Delivery':3,'Delivered':4}[order.status] || 0;
+      const today = new Date();
+      let html = '<div class="tracking-bar"><div style="color:#aaa;font-size:0.85rem;margin-bottom:8px">📍 Tracking</div><div class="tracking-steps">';
+      steps.forEach((s, i) => {
+        const done = i < statusIdx ? 'done' : i === statusIdx ? 'current' : '';
+        const icon = i < statusIdx ? '✓' : i === statusIdx ? '●' : (i+1);
+        const d = new Date(today);
+        d.setDate(d.getDate() + (i - statusIdx) + 1);
+        const dateStr = i <= statusIdx ? (i === 0 ? order.date : 'Done') : d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+        html += `<div class="tracking-step"><div class="tracking-dot ${done}">${icon}</div><span class="tracking-label">${s}</span><span class="tracking-date">${dateStr}</span></div>`;
+      });
+      html += '</div></div>';
+      const arrivalDate = new Date(today);
+      arrivalDate.setDate(arrivalDate.getDate() + (4 - statusIdx) + 1);
+      if (order.status !== 'Delivered') {
+        html += `<p style="color:#10b981;font-size:0.85rem;margin-top:8px">🚚 Expected delivery: ${arrivalDate.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}</p>`;
+      }
+      return html;
+    }
+
+    // Wishlist
+    function loadWishlist() {
+      const wishlist = JSON.parse(localStorage.getItem('shopease_wishlist') || '[]');
+      const container = document.getElementById('wishlistContainer');
+      if (wishlist.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">❤️</div><h3>Your wishlist is empty</h3><p>Save items you love by clicking the ♥ button on products.</p><p><a href="index1.html#products">Explore Products →</a></p></div>';
+        return;
+      }
+      container.innerHTML = '';
+      wishlist.forEach(item => {
+        container.innerHTML += `<div class="wishlist-card">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="wishlist-card-info">
+            <h4>${item.name}</h4>
+            <div class="price">₹${item.price.toLocaleString()}</div>
+            <div class="wishlist-actions">
+              <button class="wishlist-add-cart" onclick="wishlistToCart(${item.id})">Add to Cart</button>
+              <button class="wishlist-remove" onclick="removeWishlist(${item.id})">Remove</button>
+            </div>
+          </div>
+        </div>`;
+      });
+    }
+
+    function wishlistToCart(id) {
+      const wishlist = JSON.parse(localStorage.getItem('shopease_wishlist') || '[]');
+      const item = wishlist.find(w => w.id === id);
+      if (!item) return;
+      const cart = JSON.parse(localStorage.getItem('shopease_cart') || '[]');
+      const existing = cart.find(c => c.id === id);
+      if (existing) existing.quantity++;
+      else cart.push({...item, quantity: 1});
+      localStorage.setItem('shopease_cart', JSON.stringify(cart));
+      alert(item.name + ' added to cart!');
+    }
+
+    function removeWishlist(id) {
+      let wishlist = JSON.parse(localStorage.getItem('shopease_wishlist') || '[]');
+      wishlist = wishlist.filter(w => w.id !== id);
+      localStorage.setItem('shopease_wishlist', JSON.stringify(wishlist));
+      loadWishlist();
+    }
+
+    // Check URL hash for tab
+    function checkHash() {
+      const hash = window.location.hash.replace('#','');
+      if (hash) {
+        const btn = document.querySelector(`.sidebar-nav button[data-tab="${hash}"]`);
+        if (btn) btn.click();
+      }
+    }
+
+    // Init
+    loadSidebar();
+    loadProfile();
+    loadOrders();
+    loadWishlist();
+    checkHash();
+  </script>
+</body>
+</html>
